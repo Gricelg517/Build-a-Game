@@ -94,7 +94,8 @@ function moveObstacles() {
   for (let i = 0; i < obstacles.length; i++) {
     obstacles[i].x -= obstacleSpeed;
   }
-
+  const airplaneSpeed = 5;
+  
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp" && planeY > 0) {
       planeY -= planeSpeed;
