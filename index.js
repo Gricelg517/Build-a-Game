@@ -2,11 +2,15 @@ const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
 // // Character variables
-let characterX = 50;
-let characterY = canvas.height / 2;
-const characterWidth = 30;
-const characterHeight = 30;
-const characterSpeed = 5;
+const planeImage = new Image();
+planeImage.src = 'assets/Plane.png'; // Replace with the path to your airplane image
+// Airplane size (adjust according to your image dimensions)
+const planeWidth = 30;
+const planeHeight = 30;
+
+// Airplane position (initialize it wherever you want)
+let planeX = 50;
+let planeY = canvas.height / 2;
 
 // Background variables
 let bgX = 0;
@@ -36,8 +40,8 @@ function gameLoop() {
   drawBackground();
 
   // Move and draw the character
-  moveCharacter();
-  drawCharacter();
+  movePlane();
+  drawplane();
 
   // Generate and move obstacles
   generateObstacles();
@@ -54,18 +58,17 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
-// Helper functions
+// background function
 function drawBackground() {
-  //  we'll use a simple colored background
-  ctx.fillStyle = "#a8daff";
+   ctx.fillStyle = "#a8daff";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-backgroundImage = new Image();
-// ctx.fillStyle = href "sky.png";
+
+
 }
 
-function drawCharacter() {
-  // ctx.fillStyle = "#ff4500";
-  // ctx.fillRect(characterX, characterY, characterWidth, characterHeight);
+function drawplane() {
+  ctx.drawImage(planeImage, planeX, planeY, planeWidth, planeHeight);
+  
 }
 function drawObstacles() {
     ctx.fillStyle = "#006400"; // Green color for obstacles
@@ -75,7 +78,7 @@ function drawObstacles() {
     }
   }
 
-function moveCharacter() {
+function movePlane() {
     //  use arrow keys to move the character up and down
 } 
 
@@ -93,10 +96,11 @@ function moveObstacles() {
   }
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowUp" && characterY > 0) {
-      characterY -= characterSpeed;
-    } else if (event.key === "ArrowDown" && characterY < canvas.height - characterHeight) {
-      characterY += characterSpeed;
+    if (event.key === "ArrowUp" && planeY > 0) {
+      planeY -= planeSpeed;
+    } else if (event.key === "ArrowDown" && planeY < canvas.height - planeHeight) {
+      planeY += planeSpeed;
+      
     }
   });
 
@@ -109,14 +113,14 @@ function checkCollisions() {
   for (let i = 0; i < obstacles.length; i++) {
     const obstacle = obstacles[i];
     if (
-      characterX < obstacle.x + obstacleWidth &&
-      characterX + characterWidth > obstacle.x &&
-      characterY < obstacle.y + obstacleHeight &&
-      characterY + characterHeight > obstacle.y
+      planeX < obstacle.x + obstacleWidth &&
+      planeHeight + planeWidth > obstacle.x &&
+      planeY < obstacle.y + obstacleHeight &&
+      planeY + planeHeight > obstacle.y
     ) {
       // Collision occurred, end the game or perform any other actions
       endGame();
-    } else if (obstacle.x + obstacleWidth === characterX) {
+    } else if (obstacle.x + obstacleWidth === planeX) {
         // The character has successfully avoided an obstacle, increment the score
         score++;
     }
