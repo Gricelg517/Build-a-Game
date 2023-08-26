@@ -120,7 +120,7 @@ function checkCollisions() {
         planeY + planeHeight > obstacle.y
     ) {
       endGame();
-    } else if (obstacle.x + obstacleWidth === planeX) {
+    } else if (obstacle.x + obstacleWidth < planeX) {
         // The character has successfully avoided an obstacle, increment the score
         score++; 
     }
@@ -132,7 +132,7 @@ function endGame() {
   // Display the game over screen
   const gameOverElement = document.getElementById("game-over");
     gameOverElement.style.display = ("block");  
-    
+    gameOverElement.style.hidden();
 }
 
 
